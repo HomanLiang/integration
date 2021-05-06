@@ -9,15 +9,25 @@ import java.io.Serializable;
  */
 public class TestVO implements Serializable {
     /**
-     * 测试名字
+     * 时间戳
      */
-    private String testName;
+    private Long timestamp;
 
-    public String getTestName() {
-        return testName;
+    private String sign;
+
+    public Long getTimestamp() {
+        return timestamp;
     }
 
-    public void setTestName(String testName) {
-        this.testName = testName;
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }
