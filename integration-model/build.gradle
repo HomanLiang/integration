@@ -1,0 +1,21 @@
+plugins {
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        // 没错 我同时把resource指向了java目录 这样就可以收录java目录中的资源文件了
+        resources {
+            srcDirs = ['src/main/resources','src/main/java']
+        }
+    }
+}

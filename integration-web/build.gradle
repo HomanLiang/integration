@@ -1,0 +1,42 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id "io.spring.dependency-management" version "1.0.10.RELEASE"
+}
+
+group 'org.homan'
+
+configurations {
+    api.exclude module: "spring-boot-starter-tomcat"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    api project(":integration-service")
+    api project(":integration-model")
+
+    api("org.springframework.boot:spring-boot-starter-jetty")
+    api("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+jar {
+    enabled = false
+}
+
+task buildApp(dependsOn: build) {
+    if (project.hasProperty('env')&&"prod".equals(project.env)) {
+        project.version = '1.0.0-RELEASE'
+    } else if (project.hasProperty('env')&&"pre".equals(project.env)) {
+        project.version = '1.0.0-RELEASE'
+    } else if (project.hasProperty('env')&&"sap".equals(project.env)) {
+        project.version = '1.0.0-SNAPSHOT'
+    } else if(project.hasProperty('env')&&"test".equals(project.env)){
+        project.version = '1.0.0-SNAPSHOT'
+    } else {
+        project.version = '1.0.0-SNAPSHOT'
+    }
+}
+

@@ -1,0 +1,84 @@
+group 'org.homan'
+version '1.0.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenLocal()
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        maven {
+            url "https://mirrors.huaweicloud.com/repository/maven/"
+            name = "华为开源镜像库"
+        }
+        maven {url "https://plugins.gradle.org/m2/"}
+
+        jcenter()
+    }
+}
+
+
+allprojects {
+    apply plugin: 'java'
+    // JDK 8
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    // 全局属性设置
+    ext {
+        // java文件编码方式设置为utf-8
+        compileJava.options.encoding = 'UTF-8'
+        compileTestJava.options.encoding = 'UTF-8'
+        javadoc.options.encoding = 'utf-8'
+        springVersion="4.3.3.RELEASE"
+        mybatisSpringVersion="1.1.1"
+        jettyVersion="9.4.12.v20180830"
+    }
+
+    /*@SuppressWarnings("unchecked")*/
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.deprecation = false
+        options.compilerArgs += ["-XDignore.symbol.file", "-Xdoclint:none", "-Xlint:unchecked", "-Xlint:deprecation", "-nowarn"]
+    }
+
+    configurations {
+        compile.exclude group: 'org.slf4j', module:'slf4j-log4j12'
+    }
+
+    repositories {
+        // 使用Maven本地缓存
+        mavenLocal()
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        maven {
+            url "https://mirrors.huaweicloud.com/repository/maven/"
+            name = "华为开源镜像库"
+        }
+        maven {
+            url "http://repo1.maven.org/maven2"
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        jcenter()
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java-library'
+
+    dependencies {
+        testImplementation 'org.junit.platform:junit-platform-launcher:1.0.1'
+        testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.0.1'
+        testImplementation 'org.junit.vintage:junit-vintage-engine:4.12.1'
+    }
+
+    version '1.0.0-SNAPSHOT'
+
+    jar {
+        manifest.attributes provider: 'integration'
+    }
+}

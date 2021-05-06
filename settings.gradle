@@ -1,0 +1,5 @@
+rootProject.name = 'integration'
+include 'integration-web'
+include 'integration-service'
+include 'integration-model'
+
